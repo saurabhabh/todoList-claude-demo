@@ -1,0 +1,218 @@
+/* Modern UI Enhancements for TodoApp */
+
+/* Global smoothing and animation improvements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+/* Responsive container improvements */
+.todo-app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .todo-app-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-app-container {
+    padding: 0.75rem;
+  }
+}
+
+/* Task card hover effects */
+.task-item-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.task-item-card:hover {
+  transform: translateY(-2px) scale(1.005);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12) !important;
+}
+
+/* Progress bar animations */
+.progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Button enhancements */
+.modern-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.modern-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.modern-button:hover::before {
+  left: 100%;
+}
+
+/* Form field improvements */
+.modern-input {
+  transition: all 0.3s ease;
+}
+
+.modern-input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Tab enhancements */
+.spectrum-Tabs-item {
+  transition: all 0.2s ease;
+}
+
+.spectrum-Tabs-item:hover {
+  transform: translateY(-1px);
+}
+
+/* Badge animations */
+.task-badge {
+  animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Loading improvements */
+.loading-container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Responsive text adjustments */
+@media (max-width: 768px) {
+  .responsive-text-lg {
+    font-size: 1.25rem !important;
+  }
+  
+  .responsive-text-base {
+    font-size: 1rem !important;
+  }
+  
+  .responsive-text-sm {
+    font-size: 0.875rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-text-lg {
+    font-size: 1.125rem !important;
+  }
+  
+  .responsive-text-base {
+    font-size: 0.875rem !important;
+  }
+  
+  .responsive-text-sm {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Enhanced focus states */
+.modern-focus:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5) !important;
+  border-color: #6366f1 !important;
+}
+
+/* Glass morphism effects */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Success animation */
+.success-pulse {
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    background: linear-gradient(90deg, #10B981, #059669);
+  }
+  50% {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #34D399, #10B981);
+  }
+  100% {
+    transform: scale(1);
+    background: linear-gradient(90deg, #10B981, #059669);
+  }
+}

@@ -16,7 +16,8 @@
       "Bash(cmd //c:*)",
       "Bash(npm run relay:*)",
       "Bash(timeout 30 npm start)",
-      "Bash(docker:*)"
+      "Bash(docker:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []
