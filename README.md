@@ -5,7 +5,7 @@ A modern full-stack task management application built with ASP.NET Core, GraphQL
 ## Tech Stack
 
 ### Backend
-- **ASP.NET Core 9.0** - Web API framework
+- **ASP.NET Core 8.0** - Web API framework
 - **GraphQL with HotChocolate** - Modern API query language
 - **Entity Framework Core** - Object-relational mapping
 - **SQLite** - Lightweight database for development
@@ -37,7 +37,7 @@ A modern full-stack task management application built with ASP.NET Core, GraphQL
 ## Getting Started
 
 ### Prerequisites
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Node.js 18+](https://nodejs.org/)
 - [Docker](https://www.docker.com/) (optional)
 
@@ -58,7 +58,7 @@ dotnet build
 cd TodoApp.Api && dotnet run
 ```
 
-The API will be available at `http://localhost:5000` with GraphQL endpoint at `http://localhost:5000/graphql`.
+The API will be available at `http://localhost:5232` with GraphQL endpoint at `http://localhost:5232/graphql`.
 
 #### Frontend Application
 ```bash
@@ -207,21 +207,45 @@ cd frontend && npm run build
 ```
 
 ### Docker
+
 ```bash
-# Build and run all services
+# Build and run all services (production)
 docker-compose up --build
+
+# Run with development overrides
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build
 
 # Run in detached mode
 docker-compose up -d
 
 # Stop services
 docker-compose down
+
+# Stop and remove volumes (deletes database)
+docker-compose down -v
+
+# View logs
+docker-compose logs -f
+
+# View logs for specific service
+docker-compose logs -f todoapp-backend
 ```
+
+#### Docker Services
+- **todoapp-backend**: ASP.NET Core API (production: port 5232, dev: port 5233)
+- **todoapp-frontend**: React app with Nginx (production: port 3000, dev: port 3001)
+
+#### Docker Features
+- **Multi-stage builds** for optimized images
+- **Health checks** for service monitoring
+- **Volume persistence** for database data
+- **Development overrides** for hot reload
+- **Security hardening** with non-root users
 
 ## API Documentation
 
 The GraphQL API includes:
-- **Interactive GraphQL Playground** at `http://localhost:5000/graphql`
+- **Interactive GraphQL Playground** at `http://localhost:5232/graphql`
 - **Schema introspection** enabled in development
 - **Input validation** with detailed error messages
 - **Structured error responses** with success flags
@@ -233,6 +257,37 @@ The GraphQL API includes:
 3. Include proper error handling
 4. Write meaningful commit messages
 5. Test thoroughly before submitting
+
+## Troubleshooting
+
+### Docker Network Issues
+
+If you encounter Docker image pull failures like the Cloudflare R2 error:
+
+```bash
+# Use alternative local Docker setup with Ubuntu-based images
+docker-compose -f docker-compose.local.yml up --build
+```
+
+**Alternative Solutions:**
+- Use `node:20-slim` instead of `node:18-alpine` (already updated in main Dockerfile)
+- Use `nginx:stable` instead of `nginx:alpine` (already updated in main Dockerfile)  
+- Use Ubuntu-based Dockerfiles for restricted networks (`Dockerfile.local`)
+
+### Common Docker Problems
+- **Ensure Docker Desktop is running**
+- **Check port conflicts** (5232/5233, 3000/3001)  
+- **Try rebuilding with `--no-cache` flag**: `docker-compose build --no-cache`
+- **Clear Docker cache**: `docker system prune -a`
+
+### GraphQL Issues  
+- Verify backend is running at `http://localhost:5232/graphql`
+- Check CORS configuration in `Program.cs`
+- Regenerate Relay artifacts: `npm run relay`
+
+### Database Issues
+- Database file is persisted in Docker volumes
+- Reset database: `docker-compose down -v`
 
 ## License
 

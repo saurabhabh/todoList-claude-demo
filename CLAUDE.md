@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a full-stack TODO list application built with:
-- **Backend**: ASP.NET Core with GraphQL (HotChocolate)
+- **Backend**: ASP.NET Core 8.0 with GraphQL (HotChocolate)
 - **Frontend**: React with Adobe React Spectrum UI library
 - **GraphQL Client**: Relay for React
 - **Database**: SQL Server (with SQLite fallback for development)
@@ -117,7 +117,7 @@ cd frontend && docker build -t todoapp-frontend .
 ```
 
 ### GraphQL Endpoint
-- Development: `http://localhost:5000/graphql` or `https://localhost:5001/graphql`
+- Development: `http://localhost:5232/graphql` or `https://localhost:7064/graphql`
 - GraphQL UI available at same endpoint for schema exploration
 
 ## Development Workflow
@@ -241,3 +241,35 @@ cd frontend && docker build -t todoapp-frontend .
 
   The backend will now properly serialize integer IDs to strings in the GraphQL response while still maintaining
   integer IDs in the database.
+- Port Configuration Fixed
+
+  Before: Inconsistent ports between launch settings (5232) and Docker setup (5000)
+  After: Consistent port configuration across all files
+
+  Updated Port Mappings:
+
+  Development (Local):
+
+  - Backend: http://localhost:5232 (from launchSettings.json)
+  - Frontend: http://localhost:3000
+
+  Docker Production:
+
+  - Backend: http://localhost:5232 (maps to container port 8080)
+  - Frontend: http://localhost:3000 (maps to container port 80)
+
+  Docker Development:
+
+  - Backend: http://localhost:5233 (maps to container port 8080)
+  - Frontend: http://localhost:3001 (maps to container port 80)
+
+  Files Updated:
+
+  ✅ docker-compose.yml - Production port mapping to 5232
+  ✅ docker-compose.override.yml - Development port mapping to 5233
+  ✅ README.md - All documentation references updated
+  ✅ CLAUDE.md - GraphQL endpoint references updated
+
+  Now the configuration is consistent across all environments:
+  - Local development matches launchSettings.json (port 5232)
+  - Docker production

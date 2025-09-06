@@ -1,22 +1,22 @@
-# Use Node.js 18 for the build stage
-FROM node:18-alpine AS build
+# Use Node.js 20 LTS for the build stage (more stable)
+FROM node:20-slim AS build
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (including dev dependencies for build)
+RUN npm ci
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Generate Relay artifacts and build the application
+RUN npm run relay && npm run build
 
 # Production stage with nginx
-FROM nginx:alpine
+FROM nginx:stable
 
 # Copy built app from build stage
 COPY --from=build /app/build /usr/share/nginx/html

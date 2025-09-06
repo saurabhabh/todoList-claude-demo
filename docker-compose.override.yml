@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Development overrides for backend
+  todoapp-backend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DATABASE_CONNECTION_STRING=Data Source=/app/data/todoapp-dev.db
+    volumes:
+      # Mount source code for hot reload in development
+      - ./backend/TodoApp.Api:/app/source:ro
+      - todoapp-dev-data:/app/data
+    ports:
+      # Use different port for development
+      - "5233:8080"
+
+  # Development overrides for frontend  
+  todoapp-frontend:
+    build:
+      args:
+        - REACT_APP_GRAPHQL_ENDPOINT=http://localhost:5233/graphql
+    environment:
+      - NODE_ENV=development
+    ports:
+      # Use different port for development
+      - "3001:80"
+    # Enable development features
+    stdin_open: true
+    tty: true
+
+# Development volumes
+volumes:
+  todoapp-dev-data:
+    driver: local

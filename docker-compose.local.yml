@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Backend API Service - Using Ubuntu base for better network compatibility
+  todoapp-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.local
+    container_name: todoapp-api-local
+    restart: unless-stopped
+    ports:
+      - "5232:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DATABASE_CONNECTION_STRING=Data Source=/app/data/todoapp.db
+    volumes:
+      - todoapp-local-data:/app/data
+    networks:
+      - todoapp-local-network
+
+  # Frontend Service - Using Ubuntu base for better network compatibility
+  todoapp-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.local
+    container_name: todoapp-web-local
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - todoapp-backend
+    networks:
+      - todoapp-local-network
+
+# Named volumes for data persistence
+volumes:
+  todoapp-local-data:
+    driver: local
+
+# Networks
+networks:
+  todoapp-local-network:
+    driver: bridge
