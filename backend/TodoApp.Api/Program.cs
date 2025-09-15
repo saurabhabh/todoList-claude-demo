@@ -35,9 +35,9 @@ builder.Services
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Ensure database is created regardless of environment for SQLite
+using (var scope = app.Services.CreateScope())
 {
-    using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<TodoContext>();
     context.Database.EnsureCreated();
 }
