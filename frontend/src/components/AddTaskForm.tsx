@@ -145,17 +145,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onSubmit }) => {
                   gap: '4px',
                   transition: 'all 0.2s ease',
                   cursor: 'pointer',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-                  ':hover': {
-                    background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)',
-                    borderColor: '#A5B4FC',
-                    transform: 'translateY(-1px)',
-                    boxShadow: '0 2px 8px rgba(99, 102, 241, 0.15)'
-                  },
-                  ':active': {
-                    transform: 'translateY(0)',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
-                  }
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
                 }}
               >
                 <Refresh size="XS" />
